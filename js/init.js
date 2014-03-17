@@ -51,12 +51,16 @@ function initialise(identifier) {
             initialise('.game');
         } else {
             clearInterval(starter);
+            var game = $('.game');
+            game.empty();
             if (localStorage.getItem('best-score') < score) {
                 localStorage.setItem('best-score', score);
                 $('.best-score-container .score').html(score);
-                $('.game').css({'font-size': 36, "color": "#FFF" }).html('Good try');
+                var scoreText = $('<p></p>').css({'font-size': 36, "color": "#FFF" }).html('Good try');
+                game.append(scoreText);
             } else {
-                $('.game').css({'font-size': 36, "color": "#FFF" }).html('You can do better');
+                var scoreText2 = $('<p></p>').css({'font-size': 36, "color": "#FFF" }).html('You can do better');
+                game.append(scoreText2);
             }
         }
         // Animation complete.
@@ -68,6 +72,8 @@ function gameInit(identifier) {
     var bestScore = localStorage.getItem('best-score');
     $('.best-score-container .score').html(bestScore || 0);
     $('.score-container .score').html(0);
+    $('.game').empty();
+    counter = 0;
     target = getRandomInt(0, 10);
     $('.target').html('Catch ' + target);
     starter = setInterval(function () {initialise(identifier); }, 1000);
