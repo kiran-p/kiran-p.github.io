@@ -56,6 +56,15 @@ body {
     margin-top: 5px;
     position: absolute;
 }
+.game-cell{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    background : yellow;
+    text-align : center;
+    padding : 2px;
+    cursor: pointer;
+}
 
 /*score container styles*/
 

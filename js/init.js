@@ -1,4 +1,7 @@
 
+var starter;
+var counter = 0;
+var target = 0;
 function getCoordinates(element) {
     "use strict";
     var leftCorner = element.offset(),
@@ -6,8 +9,8 @@ function getCoordinates(element) {
         height = element.height(),
         rand = Math.random(),
         randomCoordinates = {};
-    randomCoordinates.X = rand * width;
-    randomCoordinates.Y = leftCorner.top;
+    randomCoordinates.X = rand * (width - 24);
+    randomCoordinates.Y = 10;
     return randomCoordinates;
 }
 /**
@@ -18,46 +21,36 @@ function getRandomInt(min, max) {
     "use strict";
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-function gameInit(identifier) {
-    var bestScore = localStorage.getItem('best-score');
-    $('.best-score-container .score').html(bestScore || 0);
-    $('.score-container .score').html(0);
-    var counter = 0;
-    initialise(identifier, counter);
-}
 
-function initialise(identifier, counter) {
+function initialise(identifier) {
     "use strict";
     counter =  counter + 1;
     var baseEle = $(identifier),
-        coordinates = getCoordinates(baseEle);
-    var cellElement = $('<div class="game-cell"><div>');
+        coordinates = getCoordinates(baseEle),
+        cellElement = $('<div class="game-cell"><div>');
     cellElement.css({
-        "width" : "24px",
-        "height" : "24px",
-        "position" : "absolute",
-        "left" : coordinates.X - 24,
-        "top" : coordinates.Y,
-        "background" : "yellow",
-        "textAlign" : "center",
-        "padding" : "2px"
+        "left" : coordinates.X,
+        "top" : coordinates.Y
     })
         .html(getRandomInt(0, 10))
         .click(function () {
-            var scoreEle = $('.score-container .score'),
-                score = Number(scoreEle.html()) + Number($(this).html());
-            scoreEle.html(score);
+            if (Number($(this).html()) === target) {
+                var scoreEle = $('.score-container .score'),
+                    score = Number(scoreEle.html()) + ((Number($(this).html())) / target) * 10;
+                scoreEle.html(score);
+                $(this).remove();
+            }
         });
     baseEle.append(cellElement);
     $(cellElement).animate({
         top: baseEle.height() - 24
-//        height: "toggle"
     }, 10000, "linear", function () {
         this.remove();
         var score = Number($('.score-container .score').html());
-        if (counter < 3) {
-            initialise('.game', counter);
+        if (counter < 100) {
+            initialise('.game');
         } else {
+            clearInterval(starter);
             if (localStorage.getItem('best-score') < score) {
                 localStorage.setItem('best-score', score);
                 $('.best-score-container .score').html(score);
@@ -68,5 +61,16 @@ function initialise(identifier, counter) {
         }
         // Animation complete.
     });
-    console.log(coordinates);
 }
+
+function gameInit(identifier) {
+    "use strict";
+    var bestScore = localStorage.getItem('best-score');
+    $('.best-score-container .score').html(bestScore || 0);
+    $('.score-container .score').html(0);
+    target = getRandomInt(0, 10);
+    $('.target').html('Catch ' + target);
+    starter = setInterval(function () {initialise(identifier); }, 1000);
+}
+
+
