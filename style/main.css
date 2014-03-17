@@ -1,22 +1,91 @@
 html, body {
- height:100%;
+    height: 100%;
 }
+
 body {
- background: #ccc;
- padding: 20px;
+    background: #ccc;
+    padding: 10px;
 }
-.main-container{
-  background: #fff;
-  height:100%;
+
+.main-container {
+    background: #fff;
+    height: 100%;
 }
-.game-container{
-  font-size: 36px;
-  background: #eee;
-  width:500px;
-  height:500px;
-  margin-left:auto;
-  margin-right:auto;
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
+
+/*Game container styles*/
+
+.game-container {
+    background: #eee;
+    width: 500px;
+    height: 530px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+
+}
+
+.tool-bar-container {
+    display: table;
+    border-spacing: 5px;
+    height: 30px;
+    width: 100%;
+}
+
+.tool-bar-container .tool-bar {
+    display: table-row;
+}
+
+.tool-bar-container .tool-bar div {
+    display: table-cell;
+    width: 33.3333%;
+    background: #8D8D8D;
+    color: #FFF;
+    padding: 4px;
+    text-align: center;
+}
+
+.game {
+    height: 480px;
+    width: 480px;
+    margin: 10px;
+    background: #5D5D5D;
+    margin-top: 5px;
+    position: absolute;
+}
+
+/*score container styles*/
+
+.score-container, .best-score-container {
+    width: 120px;
+    height: 60px;
+    position: absolute;
+    top: 50%;
+}
+
+.score-container {
+    left: 50px;
+    background: #CDCDCD;
+}
+
+.best-score-container {
+    right: 50px;
+    background: #CDCDCD;
+}
+
+.score-text, .score {
+    padding: 4px;
+    text-align: center;
+}
+
+.score-text {
+    background: #DCDCDC;
+}
+
+.score {
+    background: #7D7D7D;
+    color: #FFF;
 }
